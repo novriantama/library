@@ -1,0 +1,27 @@
+name: Self-Healing Technical Documentation
+
+on:
+  pull_request:
+    paths:
+      - '**.py' # Triggers checks when codebase files are modified
+
+jobs:
+  check-docs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # IMPORTANT: Fetch all history for git diff parsing
+
+      - name: Run Self-Healing Docs
+        uses: novriantama/self-healing-technical-documentation@main # Replace with your action repository path
+        with:
+          llm_api_key: ${{ secrets.OPENAGENTIC_API_KEY }}
+          confidence_threshold: '0.8'
+          auto_merge: 'true'
+        env:
+          OPENAGENTIC_API_KEY: ${{ secrets.OPENAGENTIC_API_KEY }}
+          OPENAGENTIC_BASE_URL: 'https://openagentic.id/api/v1'
+          OPENAGENTIC_MODEL: 'claude-sonnet-4.6'
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
