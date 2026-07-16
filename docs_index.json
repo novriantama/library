@@ -1,0 +1,14 @@
+{
+  "/Users/hafidz/Projects/library/app/infrastructure/api/schemas/book.py::BookCreate": [
+    "Library API Specification > Books Management > Create Book"
+  ],
+  "/Users/hafidz/Projects/library/app/infrastructure/api/v1/books.py::create_book": [
+    "Library API Specification > Books Management > Create Book"
+  ],
+  "/Users/hafidz/Projects/library/app/infrastructure/api/v1/books.py::get_book": [
+    "Library API Specification > Books Management > Get Book Detail"
+  ],
+  "/Users/hafidz/Projects/library/app/infrastructure/api/v1/books.py::list_books": [
+    "Library API Specification > Books Management > List Books"
+  ]
+}
