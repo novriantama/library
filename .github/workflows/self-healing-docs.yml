@@ -24,4 +24,4 @@ jobs:
           OPENAGENTIC_API_KEY: ${{ secrets.OPENAGENTIC_API_KEY }}
           OPENAGENTIC_BASE_URL: 'https://openagentic.id/api/v1'
           OPENAGENTIC_MODEL: 'claude-sonnet-4.6'
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
