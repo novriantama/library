@@ -233,6 +233,138 @@ class TestLibraryAPI(unittest.TestCase):
         res_rel_after = self.client.get(f"/api/v1/book-authors/{book_id}/{author_id}")
         self.assertEqual(res_rel_after.status_code, 404)
 
+    # --- USER TESTS ---
+
+    def test_create_user_success(self):
+        response = self.client.post("/api/v1/users/", json={
+            "username": "testuser",
+            "email": "testuser@example.com",
+            "password": "securepassword123"
+        })
+        self.assertEqual(response.status_code, 201)
+        data = response.json()
+        self.assertEqual(data["username"], "testuser")
+        self.assertEqual(data["email"], "testuser@example.com")
+        self.assertIn("user_id", data)
+        self.assertNotIn("password", data)
+        self.assertNotIn("password_hash", data)
+
+        # Query the database directly to verify password encryption
+        from app.infrastructure.orm import UserORM
+        db = TestingSessionLocal()
+        user_orm = db.query(UserORM).filter_by(username="testuser").first()
+        db.close()
+        
+        self.assertIsNotNone(user_orm)
+        # The password_hash must be hashed (encrypted) using bcrypt, so it shouldn't match plaintext
+        self.assertNotEqual(user_orm.password_hash, "securepassword123")
+        # Bcrypt hash starts with $2b$ or $2a$
+        self.assertTrue(user_orm.password_hash.startswith("$2b$") or user_orm.password_hash.startswith("$2a$"))
+
+    def test_create_user_validation_fails(self):
+        # Invalid email format
+        response = self.client.post("/api/v1/users/", json={
+            "username": "testuser",
+            "email": "not-an-email",
+            "password": "securepassword123"
+        })
+        self.assertEqual(response.status_code, 422)
+
+        # Username with invalid characters
+        response = self.client.post("/api/v1/users/", json={
+            "username": "user-with-dash",
+            "email": "testuser@example.com",
+            "password": "securepassword123"
+        })
+        self.assertEqual(response.status_code, 422)
+
+        # Password too short (< 6 characters)
+        response = self.client.post("/api/v1/users/", json={
+            "username": "testuser",
+            "email": "testuser@example.com",
+            "password": "123"
+        })
+        self.assertEqual(response.status_code, 422)
+
+    def test_create_user_duplicate_constraints(self):
+        # Create first user
+        self.client.post("/api/v1/users/", json={
+            "username": "testuser",
+            "email": "testuser@example.com",
+            "password": "securepassword123"
+        })
+
+        # Try to create user with duplicate username
+        response = self.client.post("/api/v1/users/", json={
+            "username": "testuser",
+            "email": "other@example.com",
+            "password": "securepassword123"
+        })
+        self.assertEqual(response.status_code, 400)
+        self.assertIn("already exists", response.json()["detail"])
+
+        # Try to create user with duplicate email
+        response = self.client.post("/api/v1/users/", json={
+            "username": "otheruser",
+            "email": "testuser@example.com",
+            "password": "securepassword123"
+        })
+        self.assertEqual(response.status_code, 400)
+        self.assertIn("already exists", response.json()["detail"])
+
+    def test_update_user_success(self):
+        res = self.client.post("/api/v1/users/", json={
+            "username": "testuser",
+            "email": "testuser@example.com",
+            "password": "securepassword123"
+        })
+        user_id = res.json()["user_id"]
+
+        # Update without changing password
+        response = self.client.put(f"/api/v1/users/{user_id}", json={
+            "username": "updateduser",
+            "email": "updated@example.com"
+        })
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json()["username"], "updateduser")
+
+        # Verify password_hash remains unchanged
+        from app.infrastructure.orm import UserORM
+        db = TestingSessionLocal()
+        user_orm_1 = db.query(UserORM).filter_by(user_id=user_id).first()
+        db.close()
+
+        # Update and change password
+        response = self.client.put(f"/api/v1/users/{user_id}", json={
+            "username": "updateduser",
+            "email": "updated@example.com",
+            "password": "newsecurepassword123"
+        })
+        self.assertEqual(response.status_code, 200)
+
+        # Verify password_hash changed
+        db = TestingSessionLocal()
+        user_orm_2 = db.query(UserORM).filter_by(user_id=user_id).first()
+        db.close()
+        
+        self.assertNotEqual(user_orm_1.password_hash, user_orm_2.password_hash)
+
+    def test_delete_user_success(self):
+        res = self.client.post("/api/v1/users/", json={
+            "username": "testuser",
+            "email": "testuser@example.com",
+            "password": "securepassword123"
+        })
+        user_id = res.json()["user_id"]
+
+        response = self.client.delete(f"/api/v1/users/{user_id}")
+        self.assertEqual(response.status_code, 204)
+
+        # Verify it's gone
+        response = self.client.get(f"/api/v1/users/{user_id}")
+        self.assertEqual(response.status_code, 404)
+
 
 if __name__ == "__main__":
     unittest.main()
+

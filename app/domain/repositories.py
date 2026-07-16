@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 from typing import List, Optional
-from app.domain.entities import Author, Book, BookAuthor
+from app.domain.entities import Author, Book, BookAuthor, User
 
 class AuthorRepository(ABC):
     @abstractmethod
@@ -94,3 +94,40 @@ class BookAuthorRepository(ABC):
     def delete(self, book_id: int, author_id: int) -> bool:
         """Delete a BookAuthor relationship by composite keys."""
         pass
+
+class UserRepository(ABC):
+    @abstractmethod
+    def get_by_id(self, user_id: int) -> Optional[User]:
+        """Retrieve a User by their ID."""
+        pass
+
+    @abstractmethod
+    def get_by_username(self, username: str) -> Optional[User]:
+        """Retrieve a User by their username."""
+        pass
+
+    @abstractmethod
+    def get_by_email(self, email: str) -> Optional[User]:
+        """Retrieve a User by their email."""
+        pass
+
+    @abstractmethod
+    def get_all(self) -> List[User]:
+        """Retrieve all Users."""
+        pass
+
+    @abstractmethod
+    def create(self, user: User) -> User:
+        """Create a new User."""
+        pass
+
+    @abstractmethod
+    def update(self, user: User) -> User:
+        """Update an existing User's details."""
+        pass
+
+    @abstractmethod
+    def delete(self, user_id: int) -> bool:
+        """Delete a User by their ID."""
+        pass
+
