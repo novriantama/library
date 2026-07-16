@@ -15,7 +15,7 @@ from app.use_cases.author import (
     DeleteAuthorUseCase,
 )
 
-router = APIRouter(prefix="/authors", tags=["Authors"])
+router = APIRouter(prefix="/author", tags=["Authors"])
 
 @router.post("/", response_model=AuthorResponse, status_code=status.HTTP_201_CREATED)
 def create_author(
