@@ -1,8 +1,25 @@
 import os
 from sqlalchemy import create_engine
 from sqlalchemy.orm import declarative_base, sessionmaker
+from dotenv import load_dotenv
 
-DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./library.db")
+# Load environment variables from a .env file if present
+load_dotenv()
+
+# If DATABASE_URL is explicitly set (e.g. in tests or manually), it takes precedence.
+if os.getenv("DATABASE_URL"):
+    DATABASE_URL = os.getenv("DATABASE_URL")
+else:
+    DB_USER = os.getenv("DB_USER")
+    DB_PASSWORD = os.getenv("DB_PASSWORD")
+    DB_HOST = os.getenv("DB_HOST")
+    DB_PORT = os.getenv("DB_PORT")
+    DB_NAME = os.getenv("DB_NAME")
+
+    if all([DB_USER, DB_PASSWORD, DB_HOST, DB_PORT, DB_NAME]):
+        DATABASE_URL = f"postgresql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
+    else:
+        DATABASE_URL = "sqlite:///./library.db"
 
 # check_same_thread is only needed for SQLite.
 connect_args = {}
@@ -25,7 +42,6 @@ if DATABASE_URL.startswith("sqlite"):
         cursor = dbapi_connection.cursor()
         cursor.execute("PRAGMA foreign_keys=ON")
         cursor.close()
-
 
 SessionLocal = sessionmaker(
     autocommit=False,
