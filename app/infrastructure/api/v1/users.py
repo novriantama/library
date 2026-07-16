@@ -15,7 +15,7 @@ from app.use_cases.user import (
     DeleteUserUseCase,
 )
 
-router = APIRouter(prefix="/users", tags=["Users"])
+router = APIRouter(prefix="/user", tags=["Users"])
 
 @router.post("/", response_model=UserResponse, status_code=status.HTTP_201_CREATED)
 def create_user(
