@@ -19,15 +19,15 @@ router = APIRouter(prefix="/book", tags=["Books"])
 
 @router.post("/", response_model=BookResponse, status_code=status.HTTP_201_CREATED)
 def create_book(
-    book_in: BookCreate,
+    book_data: BookCreate,
     create_use_case: CreateBookUseCase = Depends(get_create_book_use_case),
 ):
     return create_use_case.execute(
-        isbn=book_in.isbn,
-        title=book_in.title,
-        genre=book_in.genre,
-        publish_date=book_in.publish_date,
-        book_id=book_in.book_id,
+        isbn=book_data.isbn,
+        title=book_data.title,
+        genre=book_data.genre,
+        publish_date=book_data.publish_date,
+        book_id=book_data.book_id,
     )
 
 @router.get("/", response_model=List[BookResponse])
