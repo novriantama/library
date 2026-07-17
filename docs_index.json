@@ -1,115 +1,14 @@
 {
-  "/Users/hafidz/Projects/library/app/domain/entities.py::Book": [
-    "Library API Specification",
-    "Library API Specification > Books Management > Create Book",
+  "app/infrastructure/api/schemas/book.py::BookCreate": [
+    "Library API Specification > Books Management > Create Book"
+  ],
+  "app/infrastructure/api/v1/books.py::create_book": [
+    "Library API Specification > Books Management > Create Book"
+  ],
+  "app/infrastructure/api/v1/books.py::get_book": [
+    "Library API Specification > Books Management > Get Book Detail"
+  ],
+  "app/infrastructure/api/v1/books.py::list_books": [
     "Library API Specification > Books Management > List Books"
-  ],
-  "/Users/hafidz/Projects/library/app/domain/exceptions.py::EntityAlreadyExistsError": [
-    "Library API Specification > Books Management > Create Book"
-  ],
-  "/Users/hafidz/Projects/library/app/domain/exceptions.py::EntityNotFoundError": [
-    "Library API Specification > Books Management > Get Book Detail"
-  ],
-  "/Users/hafidz/Projects/library/app/domain/repositories.py::BookRepository": [
-    "Library API Specification"
-  ],
-  "/Users/hafidz/Projects/library/app/domain/repositories.py::BookRepository.create": [
-    "Library API Specification",
-    "Library API Specification > Books Management > Create Book"
-  ],
-  "/Users/hafidz/Projects/library/app/domain/repositories.py::BookRepository.get_all": [
-    "Library API Specification",
-    "Library API Specification > Books Management > List Books"
-  ],
-  "/Users/hafidz/Projects/library/app/domain/repositories.py::BookRepository.get_by_id": [
-    "Library API Specification",
-    "Library API Specification > Books Management > Get Book Detail"
-  ],
-  "/Users/hafidz/Projects/library/app/domain/repositories.py::BookRepository.get_by_isbn": [
-    "Library API Specification"
-  ],
-  "/Users/hafidz/Projects/library/app/domain/repositories.py::BookRepository.update": [
-    "Library API Specification"
-  ],
-  "/Users/hafidz/Projects/library/app/infrastructure/api/dependencies.py::get_book_repository": [
-    "Library API Specification"
-  ],
-  "/Users/hafidz/Projects/library/app/infrastructure/api/dependencies.py::get_create_book_use_case": [
-    "Library API Specification > Books Management > Create Book"
-  ],
-  "/Users/hafidz/Projects/library/app/infrastructure/api/dependencies.py::get_get_book_use_case": [
-    "Library API Specification > Books Management > Get Book Detail"
-  ],
-  "/Users/hafidz/Projects/library/app/infrastructure/api/schemas/book.py::BookBase": [
-    "Library API Specification"
-  ],
-  "/Users/hafidz/Projects/library/app/infrastructure/api/schemas/book.py::BookCreate": [
-    "Library API Specification > Books Management > Create Book"
-  ],
-  "/Users/hafidz/Projects/library/app/infrastructure/api/schemas/book.py::BookResponse": [
-    "Library API Specification",
-    "Library API Specification > Books Management > Get Book Detail"
-  ],
-  "/Users/hafidz/Projects/library/app/infrastructure/api/schemas/book_author.py::BookAuthorBase": [
-    "Library API Specification"
-  ],
-  "/Users/hafidz/Projects/library/app/infrastructure/api/v1/book_authors.py::remove_author_from_book": [
-    "Library API Specification"
-  ],
-  "/Users/hafidz/Projects/library/app/infrastructure/api/v1/books.py::create_book": [
-    "Library API Specification",
-    "Library API Specification > Books Management > Create Book"
-  ],
-  "/Users/hafidz/Projects/library/app/infrastructure/api/v1/books.py::get_book": [
-    "Library API Specification",
-    "Library API Specification > Books Management > Get Book Detail"
-  ],
-  "/Users/hafidz/Projects/library/app/infrastructure/api/v1/books.py::list_books": [
-    "Library API Specification",
-    "Library API Specification > Books Management > List Books"
-  ],
-  "/Users/hafidz/Projects/library/app/infrastructure/api/v1/books.py::update_book": [
-    "Library API Specification"
-  ],
-  "/Users/hafidz/Projects/library/app/infrastructure/orm.py::BookORM": [
-    "Library API Specification"
-  ],
-  "/Users/hafidz/Projects/library/app/infrastructure/repositories/book_repository.py::SQLAlchemyBookRepository.create": [
-    "Library API Specification",
-    "Library API Specification > Books Management > Create Book"
-  ],
-  "/Users/hafidz/Projects/library/app/infrastructure/repositories/book_repository.py::SQLAlchemyBookRepository.delete": [
-    "Library API Specification"
-  ],
-  "/Users/hafidz/Projects/library/app/infrastructure/repositories/book_repository.py::SQLAlchemyBookRepository.get_all": [
-    "Library API Specification",
-    "Library API Specification > Books Management > List Books"
-  ],
-  "/Users/hafidz/Projects/library/app/infrastructure/repositories/book_repository.py::SQLAlchemyBookRepository.get_by_id": [
-    "Library API Specification > Books Management > Get Book Detail"
-  ],
-  "/Users/hafidz/Projects/library/app/use_cases/book.py::CreateBookUseCase": [
-    "Library API Specification",
-    "Library API Specification > Books Management > Create Book"
-  ],
-  "/Users/hafidz/Projects/library/app/use_cases/book.py::CreateBookUseCase.execute": [
-    "Library API Specification > Books Management > Create Book"
-  ],
-  "/Users/hafidz/Projects/library/app/use_cases/book.py::DeleteBookUseCase.execute": [
-    "Library API Specification"
-  ],
-  "/Users/hafidz/Projects/library/app/use_cases/book.py::GetBookUseCase": [
-    "Library API Specification",
-    "Library API Specification > Books Management > Get Book Detail"
-  ],
-  "/Users/hafidz/Projects/library/app/use_cases/book.py::GetBookUseCase.get_all": [
-    "Library API Specification > Books Management > List Books"
-  ],
-  "/Users/hafidz/Projects/library/app/use_cases/book.py::GetBookUseCase.get_by_id": [
-    "Library API Specification",
-    "Library API Specification > Books Management > Get Book Detail"
-  ],
-  "/Users/hafidz/Projects/library/app/use_cases/book.py::GetBookUseCase.get_by_isbn": [
-    "Library API Specification"
   ]
 }
