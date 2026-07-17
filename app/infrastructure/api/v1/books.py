@@ -15,7 +15,7 @@ from app.use_cases.book import (
     DeleteBookUseCase,
 )
 
-router = APIRouter(prefix="/books", tags=["Books"])
+router = APIRouter(prefix="/book", tags=["Books"])
 
 @router.post("/", response_model=BookResponse, status_code=status.HTTP_201_CREATED)
 def create_book(
