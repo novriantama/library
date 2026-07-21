@@ -9,7 +9,7 @@ This document details the REST endpoints available for managing books in the lib
 ### Create Book
 Add a new book record to the system catalog.
 
-* **Endpoint**: `POST /books/`
+* **Endpoint**: `POST /books/new-book`
 * **Python Controller**: `create_book`
 * **Input Schema**: `BookCreate`
 * **Fields**:
