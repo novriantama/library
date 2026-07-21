@@ -14,6 +14,7 @@ import app.infrastructure.orm  # noqa: F401
 from app.infrastructure.api.v1.authors import router as authors_router
 from app.infrastructure.api.v1.books import router as books_router
 from app.infrastructure.api.v1.book_authors import router as book_authors_router
+from app.infrastructure.api.v1.users import router as users_router
 
 # Domain Exceptions
 from app.domain.exceptions import EntityNotFoundError, EntityAlreadyExistsError, DomainException
@@ -62,6 +63,7 @@ def domain_exception_handler(request: Request, exc: DomainException):
 app.include_router(authors_router, prefix="/api/v1")
 app.include_router(books_router, prefix="/api/v1")
 app.include_router(book_authors_router, prefix="/api/v1")
+app.include_router(users_router, prefix="/api/v1")
 
 @app.get("/", tags=["Root"])
 def root():

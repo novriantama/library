@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Date, ForeignKey
+from sqlalchemy import Column, Integer, String, Date, ForeignKey, DateTime, func
 from sqlalchemy.orm import relationship
 from app.infrastructure.database import Base
 
@@ -46,3 +46,14 @@ class BookAuthorORM(Base):
     # Relationships to parents
     book = relationship("BookORM", back_populates="authors")
     author = relationship("AuthorORM", back_populates="books")
+
+
+class UserORM(Base):
+    __tablename__ = "users"
+
+    user_id = Column(Integer, primary_key=True)
+    username = Column(String(50), unique=True, nullable=False)
+    email = Column(String(255), unique=True, nullable=False)
+    password_hash = Column(String(255), nullable=False)
+    created_at = Column(DateTime, server_default=func.now())
+

@@ -7,6 +7,8 @@ from app.infrastructure.database import get_db
 from app.infrastructure.repositories.author_repository import SQLAlchemyAuthorRepository
 from app.infrastructure.repositories.book_repository import SQLAlchemyBookRepository
 from app.infrastructure.repositories.book_author_repository import SQLAlchemyBookAuthorRepository
+from app.infrastructure.repositories.user_repository import SQLAlchemyUserRepository
+
 
 # Use Cases
 from app.use_cases.author import (
@@ -26,6 +28,12 @@ from app.use_cases.book_author import (
     UpdateBookAuthorRoleUseCase,
     RemoveAuthorFromBookUseCase,
     GetBookAuthorsUseCase,
+)
+from app.use_cases.user import (
+    CreateUserUseCase,
+    GetUserUseCase,
+    UpdateUserUseCase,
+    DeleteUserUseCase,
 )
 
 # --- AUTHOR DEPENDENCIES ---
@@ -106,3 +114,30 @@ def get_get_book_authors_use_case(
     repo: SQLAlchemyBookAuthorRepository = Depends(get_book_author_repository)
 ) -> GetBookAuthorsUseCase:
     return GetBookAuthorsUseCase(repo)
+
+
+# --- USER DEPENDENCIES ---
+
+def get_user_repository(db: Session = Depends(get_db)) -> SQLAlchemyUserRepository:
+    return SQLAlchemyUserRepository(db)
+
+def get_create_user_use_case(
+    repo: SQLAlchemyUserRepository = Depends(get_user_repository)
+) -> CreateUserUseCase:
+    return CreateUserUseCase(repo)
+
+def get_get_user_use_case(
+    repo: SQLAlchemyUserRepository = Depends(get_user_repository)
+) -> GetUserUseCase:
+    return GetUserUseCase(repo)
+
+def get_update_user_use_case(
+    repo: SQLAlchemyUserRepository = Depends(get_user_repository)
+) -> UpdateUserUseCase:
+    return UpdateUserUseCase(repo)
+
+def get_delete_user_use_case(
+    repo: SQLAlchemyUserRepository = Depends(get_user_repository)
+) -> DeleteUserUseCase:
+    return DeleteUserUseCase(repo)
+
