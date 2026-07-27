@@ -364,7 +364,89 @@ class TestLibraryAPI(unittest.TestCase):
         response = self.client.get(f"/api/v1/users/{user_id}")
         self.assertEqual(response.status_code, 404)
 
+    # --- AUTH TESTS ---
+
+    def test_login_success(self):
+        # Register a test user
+        self.client.post("/api/v1/users/", json={
+            "username": "authuser",
+            "email": "authuser@example.com",
+            "password": "mypassword123"
+        })
+
+        # Login with correct credentials
+        response = self.client.post("/api/v1/auth/login", json={
+            "username": "authuser",
+            "password": "mypassword123"
+        })
+        self.assertEqual(response.status_code, 200)
+        data = response.json()
+        self.assertIn("access_token", data)
+        self.assertEqual(data["token_type"], "bearer")
+
+        # Decode token to verify payload claims
+        from app.infrastructure.security.jwt import decode_access_token
+        payload = decode_access_token(data["access_token"])
+        self.assertEqual(payload["username"], "authuser")
+
+    def test_login_invalid_credentials(self):
+        # Register user
+        self.client.post("/api/v1/users/", json={
+            "username": "authuser",
+            "email": "authuser@example.com",
+            "password": "mypassword123"
+        })
+
+        # Login with wrong password
+        response = self.client.post("/api/v1/auth/login", json={
+            "username": "authuser",
+            "password": "wrongpassword"
+        })
+        self.assertEqual(response.status_code, 401)
+        self.assertIn("Invalid username or password", response.json()["detail"])
+
+        # Login with non-existent user
+        response = self.client.post("/api/v1/auth/login", json={
+            "username": "nonexistent",
+            "password": "mypassword123"
+        })
+        self.assertEqual(response.status_code, 401)
+
+    def test_logout_success(self):
+        # Register and login user
+        self.client.post("/api/v1/users/", json={
+            "username": "authuser",
+            "email": "authuser@example.com",
+            "password": "mypassword123"
+        })
+        login_res = self.client.post("/api/v1/auth/login", json={
+            "username": "authuser",
+            "password": "mypassword123"
+        })
+        token = login_res.json()["access_token"]
+
+        # Logout with Authorization header
+        response = self.client.post(
+            "/api/v1/auth/logout",
+            headers={"Authorization": f"Bearer {token}"}
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json()["message"], "Successfully logged out")
+
+    def test_logout_invalid_token(self):
+        # Logout with invalid token
+        response = self.client.post(
+            "/api/v1/auth/logout",
+            headers={"Authorization": "Bearer invalidtoken123"}
+        )
+        self.assertEqual(response.status_code, 401)
+
+        # Logout without header
+        response = self.client.post("/api/v1/auth/logout")
+        self.assertEqual(response.status_code, 401)
+
 
 if __name__ == "__main__":
     unittest.main()
+
 

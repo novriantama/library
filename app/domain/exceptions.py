@@ -9,3 +9,7 @@ class EntityNotFoundError(DomainException):
 class EntityAlreadyExistsError(DomainException):
     """Raised when attempting to create an entity that already exists (e.g. unique constraint violation)."""
     pass
+
+class UnauthorizedError(DomainException):
+    """Raised when authentication credentials or token is invalid/unauthorized."""
+    pass
