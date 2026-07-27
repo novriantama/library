@@ -35,6 +35,10 @@ from app.use_cases.user import (
     UpdateUserUseCase,
     DeleteUserUseCase,
 )
+from app.use_cases.auth import (
+    LoginUseCase,
+    LogoutUseCase,
+)
 
 # --- AUTHOR DEPENDENCIES ---
 
@@ -140,4 +144,16 @@ def get_delete_user_use_case(
     repo: SQLAlchemyUserRepository = Depends(get_user_repository)
 ) -> DeleteUserUseCase:
     return DeleteUserUseCase(repo)
+
+
+# --- AUTH DEPENDENCIES ---
+
+def get_login_use_case(
+    user_repo: SQLAlchemyUserRepository = Depends(get_user_repository)
+) -> LoginUseCase:
+    return LoginUseCase(user_repo)
+
+def get_logout_use_case() -> LogoutUseCase:
+    return LogoutUseCase()
+
 

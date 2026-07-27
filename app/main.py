@@ -15,9 +15,10 @@ from app.infrastructure.api.v1.authors import router as authors_router
 from app.infrastructure.api.v1.books import router as books_router
 from app.infrastructure.api.v1.book_authors import router as book_authors_router
 from app.infrastructure.api.v1.users import router as users_router
+from app.infrastructure.api.v1.auth import router as auth_router
 
 # Domain Exceptions
-from app.domain.exceptions import EntityNotFoundError, EntityAlreadyExistsError, DomainException
+from app.domain.exceptions import EntityNotFoundError, EntityAlreadyExistsError, UnauthorizedError, DomainException
 
 # Create database tables automatically
 Base.metadata.create_all(bind=engine)
@@ -52,6 +53,13 @@ def entity_already_exists_handler(request: Request, exc: EntityAlreadyExistsErro
         content={"detail": str(exc)},
     )
 
+@app.exception_handler(UnauthorizedError)
+def unauthorized_handler(request: Request, exc: UnauthorizedError):
+    return JSONResponse(
+        status_code=status.HTTP_401_UNAUTHORIZED,
+        content={"detail": str(exc)},
+    )
+
 @app.exception_handler(DomainException)
 def domain_exception_handler(request: Request, exc: DomainException):
     return JSONResponse(
@@ -64,6 +72,7 @@ app.include_router(authors_router, prefix="/api/v1")
 app.include_router(books_router, prefix="/api/v1")
 app.include_router(book_authors_router, prefix="/api/v1")
 app.include_router(users_router, prefix="/api/v1")
+app.include_router(auth_router, prefix="/api/v1")
 
 @app.get("/", tags=["Root"])
 def root():
