@@ -58,7 +58,7 @@ class TestLibraryAPI(unittest.TestCase):
     # --- AUTHOR TESTS ---
 
     def test_create_author_success(self):
-        response = self.client.post("/api/v1/authors/", json={
+        response = self.client.post("/api/v1/author/", json={
             "first_name": "J.K.",
             "last_name": "Rowling"
         })
@@ -70,30 +70,30 @@ class TestLibraryAPI(unittest.TestCase):
 
     def test_create_author_validation_fails(self):
         # Empty first_name
-        response = self.client.post("/api/v1/authors/", json={
+        response = self.client.post("/api/v1/author/", json={
             "first_name": "",
             "last_name": "Rowling"
         })
         self.assertEqual(response.status_code, 422)
 
         # first_name too long (>50 characters)
-        response = self.client.post("/api/v1/authors/", json={
+        response = self.client.post("/api/v1/author/", json={
             "first_name": "A" * 51,
             "last_name": "Rowling"
         })
         self.assertEqual(response.status_code, 422)
 
     def test_get_author_not_found(self):
-        response = self.client.get("/api/v1/authors/999")
+        response = self.client.get("/api/v1/author/999")
         self.assertEqual(response.status_code, 404)
 
     def test_update_author_success(self):
         # Create first
-        res = self.client.post("/api/v1/authors/", json={"first_name": "John", "last_name": "Doe"})
+        res = self.client.post("/api/v1/author/", json={"first_name": "John", "last_name": "Doe"})
         author_id = res.json()["author_id"]
 
         # Update
-        response = self.client.put(f"/api/v1/authors/{author_id}", json={
+        response = self.client.put(f"/api/v1/author/{author_id}", json={
             "first_name": "Johnny",
             "last_name": "Doe"
         })
@@ -101,27 +101,27 @@ class TestLibraryAPI(unittest.TestCase):
         self.assertEqual(response.json()["first_name"], "Johnny")
 
     def test_update_author_not_found(self):
-        response = self.client.put("/api/v1/authors/999", json={
+        response = self.client.put("/api/v1/author/999", json={
             "first_name": "Johnny",
             "last_name": "Doe"
         })
         self.assertEqual(response.status_code, 404)
 
     def test_delete_author_success(self):
-        res = self.client.post("/api/v1/authors/", json={"first_name": "John", "last_name": "Doe"})
+        res = self.client.post("/api/v1/author/", json={"first_name": "John", "last_name": "Doe"})
         author_id = res.json()["author_id"]
 
-        response = self.client.delete(f"/api/v1/authors/{author_id}")
+        response = self.client.delete(f"/api/v1/author/{author_id}")
         self.assertEqual(response.status_code, 204)
 
         # Verify it's gone
-        response = self.client.get(f"/api/v1/authors/{author_id}")
+        response = self.client.get(f"/api/v1/author/{author_id}")
         self.assertEqual(response.status_code, 404)
 
     # --- BOOK TESTS ---
 
     def test_create_book_success(self):
-        response = self.client.post("/api/v1/books/", json={
+        response = self.client.post("/api/v1/books/new-book", json={
             "isbn": "9780747532699",
             "title": "Harry Potter and the Philosopher's Stone",
             "genre": "Fantasy",
@@ -134,7 +134,7 @@ class TestLibraryAPI(unittest.TestCase):
 
     def test_create_book_validation_fails(self):
         # ISBN must be exactly 13 digits
-        response = self.client.post("/api/v1/books/", json={
+        response = self.client.post("/api/v1/books/new-book", json={
             "isbn": "1234567890",  # 10 digits
             "title": "Invalid ISBN Book",
             "genre": "Fiction"
@@ -142,7 +142,7 @@ class TestLibraryAPI(unittest.TestCase):
         self.assertEqual(response.status_code, 422)
 
         # ISBN must be digits only
-        response = self.client.post("/api/v1/books/", json={
+        response = self.client.post("/api/v1/books/new-book", json={
             "isbn": "978074753269A",  # Contains letter
             "title": "Invalid ISBN Book",
             "genre": "Fiction"
@@ -151,14 +151,14 @@ class TestLibraryAPI(unittest.TestCase):
 
     def test_create_book_duplicate_isbn(self):
         # Create one
-        self.client.post("/api/v1/books/", json={
+        self.client.post("/api/v1/books/new-book", json={
             "isbn": "9780747532699",
             "title": "First Book",
             "genre": "Fantasy"
         })
 
         # Try to create another with same ISBN
-        response = self.client.post("/api/v1/books/", json={
+        response = self.client.post("/api/v1/books/new-book", json={
             "isbn": "9780747532699",
             "title": "Duplicate ISBN Book",
             "genre": "Fiction"
@@ -170,11 +170,11 @@ class TestLibraryAPI(unittest.TestCase):
 
     def test_assign_author_to_book_success(self):
         # Create Author
-        res_a = self.client.post("/api/v1/authors/", json={"first_name": "J.K.", "last_name": "Rowling"})
+        res_a = self.client.post("/api/v1/author/", json={"first_name": "J.K.", "last_name": "Rowling"})
         author_id = res_a.json()["author_id"]
 
         # Create Book
-        res_b = self.client.post("/api/v1/books/", json={
+        res_b = self.client.post("/api/v1/books/new-book", json={
             "isbn": "9780747532699",
             "title": "Harry Potter",
             "genre": "Fantasy"
@@ -204,11 +204,11 @@ class TestLibraryAPI(unittest.TestCase):
 
     def test_cascade_delete_author(self):
         # Create Author
-        res_a = self.client.post("/api/v1/authors/", json={"first_name": "J.K.", "last_name": "Rowling"})
+        res_a = self.client.post("/api/v1/author/", json={"first_name": "J.K.", "last_name": "Rowling"})
         author_id = res_a.json()["author_id"]
 
         # Create Book
-        res_b = self.client.post("/api/v1/books/", json={
+        res_b = self.client.post("/api/v1/books/new-book", json={
             "isbn": "9780747532699",
             "title": "Harry Potter",
             "genre": "Fantasy"
@@ -227,7 +227,7 @@ class TestLibraryAPI(unittest.TestCase):
         self.assertEqual(res_rel.status_code, 200)
 
         # Delete Author
-        self.client.delete(f"/api/v1/authors/{author_id}")
+        self.client.delete(f"/api/v1/author/{author_id}")
 
         # Verify assignment was cascade deleted
         res_rel_after = self.client.get(f"/api/v1/book-authors/{book_id}/{author_id}")
