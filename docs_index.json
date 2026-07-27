@@ -1,14 +1,146 @@
 {
+  "app/domain/repositories.py::AuthorRepository.delete": [
+    "Library API Specification > Authors Management > Delete Author",
+    "Library API Specification > Book Authors Management > Remove Author from Book",
+    "Library API Specification > Books Management > Delete Book",
+    "Library API Specification > Users Management > Delete User"
+  ],
+  "app/domain/repositories.py::BookAuthorRepository.delete": [
+    "Library API Specification > Authors Management > Delete Author",
+    "Library API Specification > Book Authors Management > Remove Author from Book",
+    "Library API Specification > Books Management > Delete Book",
+    "Library API Specification > Users Management > Delete User"
+  ],
+  "app/domain/repositories.py::BookRepository.delete": [
+    "Library API Specification > Authors Management > Delete Author",
+    "Library API Specification > Book Authors Management > Remove Author from Book",
+    "Library API Specification > Books Management > Delete Book",
+    "Library API Specification > Users Management > Delete User"
+  ],
+  "app/domain/repositories.py::UserRepository.delete": [
+    "Library API Specification > Authors Management > Delete Author",
+    "Library API Specification > Book Authors Management > Remove Author from Book",
+    "Library API Specification > Books Management > Delete Book",
+    "Library API Specification > Users Management > Delete User"
+  ],
+  "app/infrastructure/api/schemas/auth.py::TokenResponse": [
+    "Library API Specification > Authentication Management > User Login"
+  ],
+  "app/infrastructure/api/schemas/auth.py::UserLogin": [
+    "Library API Specification > Authentication Management > User Login"
+  ],
+  "app/infrastructure/api/schemas/author.py::AuthorCreate": [
+    "Library API Specification > Authors Management > Create Author"
+  ],
+  "app/infrastructure/api/schemas/author.py::AuthorUpdate": [
+    "Library API Specification > Authors Management > Update Author"
+  ],
   "app/infrastructure/api/schemas/book.py::BookCreate": [
     "Library API Specification > Books Management > Create Book"
   ],
+  "app/infrastructure/api/schemas/book.py::BookUpdate": [
+    "Library API Specification > Books Management > Update Book"
+  ],
+  "app/infrastructure/api/schemas/book_author.py::BookAuthorCreate": [
+    "Library API Specification > Book Authors Management > Assign Author to Book"
+  ],
+  "app/infrastructure/api/schemas/book_author.py::BookAuthorUpdate": [
+    "Library API Specification > Book Authors Management > Update Book Author Role"
+  ],
+  "app/infrastructure/api/schemas/user.py::UserCreate": [
+    "Library API Specification > Users Management > Create User"
+  ],
+  "app/infrastructure/api/schemas/user.py::UserUpdate": [
+    "Library API Specification > Users Management > Update User"
+  ],
+  "app/infrastructure/api/v1/auth.py::login": [
+    "Library API Specification > Authentication Management > User Login"
+  ],
+  "app/infrastructure/api/v1/auth.py::logout": [
+    "Library API Specification > Authentication Management > User Logout"
+  ],
+  "app/infrastructure/api/v1/authors.py::create_author": [
+    "Library API Specification > Authors Management > Create Author"
+  ],
+  "app/infrastructure/api/v1/authors.py::delete_author": [
+    "Library API Specification > Authors Management > Delete Author"
+  ],
+  "app/infrastructure/api/v1/authors.py::get_author": [
+    "Library API Specification > Authors Management > Get Author Detail"
+  ],
+  "app/infrastructure/api/v1/authors.py::list_authors": [
+    "Library API Specification > Authors Management > List Authors"
+  ],
+  "app/infrastructure/api/v1/authors.py::update_author": [
+    "Library API Specification > Authors Management > Update Author"
+  ],
+  "app/infrastructure/api/v1/book_authors.py::assign_author_to_book": [
+    "Library API Specification > Book Authors Management > Assign Author to Book"
+  ],
+  "app/infrastructure/api/v1/book_authors.py::get_book_author_relationship": [
+    "Library API Specification > Book Authors Management > Get Book Author Relationship"
+  ],
+  "app/infrastructure/api/v1/book_authors.py::list_book_authors": [
+    "Library API Specification > Book Authors Management > List Book Authors"
+  ],
+  "app/infrastructure/api/v1/book_authors.py::remove_author_from_book": [
+    "Library API Specification > Book Authors Management > Remove Author from Book"
+  ],
+  "app/infrastructure/api/v1/book_authors.py::update_book_author_role": [
+    "Library API Specification > Book Authors Management > Update Book Author Role"
+  ],
   "app/infrastructure/api/v1/books.py::create_book": [
     "Library API Specification > Books Management > Create Book"
+  ],
+  "app/infrastructure/api/v1/books.py::delete_book": [
+    "Library API Specification > Books Management > Delete Book"
   ],
   "app/infrastructure/api/v1/books.py::get_book": [
     "Library API Specification > Books Management > Get Book Detail"
   ],
   "app/infrastructure/api/v1/books.py::list_books": [
     "Library API Specification > Books Management > List Books"
+  ],
+  "app/infrastructure/api/v1/books.py::update_book": [
+    "Library API Specification > Books Management > Update Book"
+  ],
+  "app/infrastructure/api/v1/users.py::create_user": [
+    "Library API Specification > Users Management > Create User"
+  ],
+  "app/infrastructure/api/v1/users.py::delete_user": [
+    "Library API Specification > Users Management > Delete User"
+  ],
+  "app/infrastructure/api/v1/users.py::get_user": [
+    "Library API Specification > Users Management > Get User Detail"
+  ],
+  "app/infrastructure/api/v1/users.py::list_users": [
+    "Library API Specification > Users Management > List Users"
+  ],
+  "app/infrastructure/api/v1/users.py::update_user": [
+    "Library API Specification > Users Management > Update User"
+  ],
+  "app/infrastructure/repositories/author_repository.py::SQLAlchemyAuthorRepository.delete": [
+    "Library API Specification > Authors Management > Delete Author",
+    "Library API Specification > Book Authors Management > Remove Author from Book",
+    "Library API Specification > Books Management > Delete Book",
+    "Library API Specification > Users Management > Delete User"
+  ],
+  "app/infrastructure/repositories/book_author_repository.py::SQLAlchemyBookAuthorRepository.delete": [
+    "Library API Specification > Authors Management > Delete Author",
+    "Library API Specification > Book Authors Management > Remove Author from Book",
+    "Library API Specification > Books Management > Delete Book",
+    "Library API Specification > Users Management > Delete User"
+  ],
+  "app/infrastructure/repositories/book_repository.py::SQLAlchemyBookRepository.delete": [
+    "Library API Specification > Authors Management > Delete Author",
+    "Library API Specification > Book Authors Management > Remove Author from Book",
+    "Library API Specification > Books Management > Delete Book",
+    "Library API Specification > Users Management > Delete User"
+  ],
+  "app/infrastructure/repositories/user_repository.py::SQLAlchemyUserRepository.delete": [
+    "Library API Specification > Authors Management > Delete Author",
+    "Library API Specification > Book Authors Management > Remove Author from Book",
+    "Library API Specification > Books Management > Delete Book",
+    "Library API Specification > Users Management > Delete User"
   ]
 }
